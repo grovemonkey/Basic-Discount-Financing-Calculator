@@ -13,11 +13,18 @@ promotional_price1 = msrp
 
 if add_promotions_input.lower() == "y":
     # Ask for promotion 1 input
-    promotion1_percent_input = input("Enter the percentage for Promotion 1: ")
+    promotion1_type_input = input("Enter the type of Promotion 1 (p for percentage, a for amount): ")
+    promotion1_percent_input = input("Enter the percentage or amount for Promotion 1: ")
     promotion1_percent = float(promotion1_percent_input) if promotion1_percent_input else 0.0
 
     # Perform calculations with promotion 1
-    promotion1_amount = msrp * (promotion1_percent / 100)
+    if promotion1_type_input.lower() == "p":
+        promotion1_amount = msrp * (promotion1_percent / 100)
+    elif promotion1_type_input.lower() == "a":
+        promotion1_amount = promotion1_percent
+    else:
+        print("Invalid input for Promotion 1 type")
+
     promotional_price1 = msrp - promotion1_amount
 
     # Print results for promotion 1
@@ -27,11 +34,18 @@ if add_promotions_input.lower() == "y":
     # Ask for promotion 2 input
     promotion2_input = input("Would you like to add Promotion 2? (y/n): ")
     if promotion2_input.lower() == "y":
-        promotion2_percent_input = input("Enter the percentage for Promotion 2: ")
+        promotion2_type_input = input("Enter the type of Promotion 2 (p for percentage, a for amount): ")
+        promotion2_percent_input = input("Enter the percentage or amount for Promotion 2: ")
         promotion2_percent = float(promotion2_percent_input) if promotion2_percent_input else 0.0
 
         # Perform calculations with promotion 2
-        promotion2_amount = promotional_price1 * (promotion2_percent / 100)
+        if promotion2_type_input.lower() == "p":
+            promotion2_amount = promotional_price1 * (promotion2_percent / 100)
+        elif promotion2_type_input.lower() == "a":
+            promotion2_amount = promotion2_percent
+        else:
+            print("Invalid input for Promotion 2 type")
+
         promotional_price2 = promotional_price1 - promotion2_amount
 
         # Print results for promotion 2
@@ -41,11 +55,18 @@ if add_promotions_input.lower() == "y":
         # Ask for promotion 3 input
         promotion3_input = input("Would you like to add Promotion 3? (y/n): ")
         if promotion3_input.lower() == "y":
-            promotion3_percent_input = input("Enter the percentage for Promotion 3: ")
+            promotion3_type_input = input("Enter the type of Promotion 3 (p for percentage, a for amount): ")
+            promotion3_percent_input = input("Enter the percentage or amount for Promotion 3: ")
             promotion3_percent = float(promotion3_percent_input) if promotion3_percent_input else 0.0
 
             # Perform calculations with promotion 3
-            promotion3_amount = promotional_price2 * (promotion3_percent / 100)
+            if promotion3_type_input.lower() == "p":
+                promotion3_amount = promotional_price2 * (promotion3_percent / 100)
+            elif promotion3_type_input.lower() == "a":
+                promotion3_amount = promotion3_percent
+            else:
+                print("Invalid input for Promotion 3 type")
+
             promotional_price3 = promotional_price2 - promotion3_amount
 
             # Print results for promotion 3
@@ -64,7 +85,7 @@ else:
     final_promotional_price = msrp
 
 # Print final promotional price
-print("\nFinal Price: $", final_promotional_price)
+print("\nFinal Promotional Price: $", final_promotional_price)
 
 # Calculate monthly payments if financing is selected
 financing_input = input("\nWould you like to finance your purchase? (y/n): ")
@@ -79,17 +100,17 @@ if financing_input.lower() == "y":
 
     # Print downpayment result
     print("Loan Amount: $", loan_amount)
+
     financing_percent_input = input("Enter the financing percentage: ")
-financing_term_input = input("Enter the financing term (in months): ")
+    financing_term_input = input("Enter the financing term (in months): ")
 
-# Convert input to floats or set default values if no input is provided
-financing_percent = float(financing_percent_input) if financing_percent_input else 0.0
-financing_term = float(financing_term_input) if financing_term_input else 0.0
+    # Convert input to floats or set default values if no input is provided
+    financing_percent = float(financing_percent_input) if financing_percent_input else 0.0
+    financing_term = float(financing_term_input) if financing_term_input else 0.0
 
-# Perform calculations
-monthly_interest_rate = financing_percent / 1200  # 12 months per year, 100 to convert percentage to decimal
-monthly_payment = loan_amount * monthly_interest_rate / (1 - (1 + monthly_interest_rate) ** (-financing_term))
+    # Perform calculations
+    monthly_interest_rate = financing_percent / 1200  # 12 months per year, 100 to convert percentage to decimal
+    monthly_payment = loan_amount * monthly_interest_rate / (1 - (1 + monthly_interest_rate) ** (-financing_term))
 
-# Print monthly payment amount
-print("Monthly Payment: $", round(monthly_payment, 2))
-print("Disclaimer: Monthly Payments are generated without any lender-specific fees added. Final monthly payments will vary.")
+    # Print monthly payment amount
+    print("Monthly Payment: $", round(monthly_payment, 2))
